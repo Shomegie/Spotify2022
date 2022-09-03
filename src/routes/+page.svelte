@@ -1,3 +1,25 @@
+<script>
+    export let data;
+    $: artists = null
+
+    let url = "https://api.spotify.com/v1/search?q=artist%3AJohn&type=artist"
+    let spotify_parameters = {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${data.access_token}`,
+            'Content-Type': "application/json"
+        }
+    }
+
+    let SEARCH_ARTIST = async () => {
+       let response = await fetch(url,spotify_parameters)
+       const response_data = await response.json()
+
+       artists = response_data.artists.items
+    }
+
+</script>
+
 <div class="h-full w-full flex flex-col">
     <div class="w-full h-1/6">
         <div class="w-full h-1/3 px-2 bg-white">
@@ -12,7 +34,7 @@
                     <input class="w-full bg-transparent py-3 pl-6 placeholder-white text-white  font-thin outline-none" type="text" placeholder="Search for an artist ...">
                 </div>
                 <div class="w-1/6 flex items-center justify-end pr-4">
-                    <button class="bg-white py-2 text-sm text-slate-700 transition duration-150 hover:text-black cursor-pointer px-4 flex items-center rounded-lg ">Search<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
+                    <button on:click={SEARCH_ARTIST} class="bg-white py-2 text-sm text-slate-700 transition duration-150 hover:text-black cursor-pointer px-4 flex items-center rounded-lg ">Search<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                       </button>
@@ -21,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div class="h-5/6 w-full">
+    <div class="h-5/6 w-full text-white">
         <div class="h-full bg-black bg-opacity-5 lg:w-5/6 mx-auto relative">
             <div class="absolute h-full w-full flex items-center justify-center">
                 <svg width="400px" height="276px" viewBox="0 0 892 831" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -34,6 +56,14 @@
                     </g>
                 </svg>
             </div>
+            <div class="artists_pane">
+                {#if artists}
+                    {#each artists as artist}
+                        <p>{artist.name}</p>
+                    {/each}      
+                 {/if}
+            </div>
+
         </div>
     </div>
 </div>
