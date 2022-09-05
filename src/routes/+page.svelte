@@ -1,4 +1,5 @@
 <script>
+    import ArtistCard from '../components/artist_card.svelte'
     export let data;
     $: artists = null
 
@@ -16,35 +17,33 @@
        const response_data = await response.json()
 
        artists = response_data.artists.items
+       console.log(response_data.artists.items)
     }
 
-    let dummy_image = "https://i.scdn.co/image/ab6761610000e5eb24e41f491b129093a6fee383"
+    // let dummy_image = "https://i.scdn.co/image/ab6761610000e5eb24e41f491b129093a6fee383"
 
-    let dummy_artist = [
-        {name:"loaded lux",img:dummy_image},
-        {name:"Daniel Callicoe",img:dummy_image},
-        {name:"Hollow da don",img:dummy_image},
-        {name:"Aye verb",img:dummy_image},
-        {name:"Miles",img:dummy_image},
-        {name:"Sepceter",img:dummy_image},
-        {name:"Callicoe",img:dummy_image},
-        {name:"T-Rex",img:dummy_image},
-        {name:"clipse",img:dummy_image},
-        {name:"level",img:dummy_image},
-        {name:"Hudah",img:dummy_image},
-        {name:"jobah",img:dummy_image},
-        {name:"Loser Jumper",img:dummy_image},
-        {name:"Callicoe",img:dummy_image},
-        {name:"T-Rex",img:dummy_image},
-        {name:"clipse",img:dummy_image},
-        {name:"level",img:dummy_image},
-        {name:"Hudah",img:dummy_image},
-        {name:"jobah",img:dummy_image},
-        {name:"Loser Jumper",img:dummy_image},
-
-
-
-    ]
+    // let dummy_artist = [
+    //     {name:"loaded lux",img:dummy_image},
+    //     {name:"Daniel Callicoe",img:dummy_image},
+    //     {name:"Hollow da don",img:dummy_image},
+    //     {name:"Aye verb",img:dummy_image},
+    //     {name:"Miles",img:dummy_image},
+    //     {name:"Sepceter",img:dummy_image},
+    //     {name:"Callicoe",img:dummy_image},
+    //     {name:"T-Rex",img:dummy_image},
+    //     {name:"clipse",img:dummy_image},
+    //     {name:"level",img:dummy_image},
+    //     {name:"Hudah",img:dummy_image},
+    //     {name:"jobah",img:dummy_image},
+    //     {name:"Loser Jumper",img:dummy_image},
+    //     {name:"Callicoe",img:dummy_image},
+    //     {name:"T-Rex",img:dummy_image},
+    //     {name:"clipse",img:dummy_image},
+    //     {name:"level",img:dummy_image},
+    //     {name:"Hudah",img:dummy_image},
+    //     {name:"jobah",img:dummy_image},
+    //     {name:"Loser Jumper",img:dummy_image},
+    // ]
 
 
 </script>
@@ -73,8 +72,8 @@
         </div>
     </div>
     <div class="h-5/6 w-full text-white">
-        <div class="h-full bg-black bg-opacity-5 lg:w-5/6 mx-auto relative">
-            <div class="absolute -z-10 h-full w-full flex items-center justify-center">
+        <div class="h-full bg-black bg-opacity-5 lg:w-5/6 mx-auto flex flex-col relative">
+            <div class="absolute -z-10 top-0 left-0 h-full w-full flex items-center justify-center">
                 <svg width="400px" height="276px" viewBox="0 0 892 831" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.158718723">
                         <g id="Desktop-Copy-4" transform="translate(-113.000000, -180.000000)" fill="#175C2C" fill-rule="nonzero">
@@ -85,22 +84,18 @@
                     </g>
                 </svg>
             </div>
-            <div class="artists_pane w-5/6 mx-auto mt-20 ">
+            {#if artists}
+                <div class="mt-16 w-5/6 mx-auto text-sm text-white italic">You searched for "John"</div>
+            {/if}
+            <div class="artists_pane w-5/6 mx-auto mt-4 ">
                 {#if artists}
-                    {#each artists as artist}
-                        <p>{artist.name}</p>
-                    {/each}      
+                    <div class="grid grid-cols-5 gap-5 md:grid-cols-5 xl:grid-cols-7 xl:gap-6 cursor-pointer">
+                        {#each artists as artist }
+                            <ArtistCard image_src={artist.images[0].url} artist_name={artist.name} />
+                        {/each}
+                    </div>
                  {/if}
-                 <div class="grid grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-6 cursor-pointer">
-                    {#each dummy_artist as dummy }
-                        <div class="bg-white p-2 text-white rounded-xl bg-opacity-5">
-                            <img class="" src={dummy.img} alt="">
-                            <div class="text-xs font-extralight font-sans pt-2 ">{dummy.name}</div>
-                        </div>
-                     {/each}
-                 </div>
             </div>
-
         </div>
     </div>
 </div>
