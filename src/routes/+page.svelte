@@ -1,9 +1,10 @@
 <script>
     import ArtistCard from '../components/artist_card.svelte'
     export let data;
-    $: artists = null
+    let artists = null
+    let query = ""
 
-    let url = "https://api.spotify.com/v1/search?q=artist%3AJohn&type=artist"
+
     let spotify_parameters = {
         method: "GET",
         headers: {
@@ -12,12 +13,21 @@
         }
     }
 
-    let SEARCH_ARTIST = async () => {
-       let response = await fetch(url,spotify_parameters)
-       const response_data = await response.json()
 
-       artists = response_data.artists.items
-       console.log(response_data.artists.items)
+
+    let SEARCH_ARTIST = async () => {
+        if (query === "")
+            return
+        let url = `https://api.spotify.com/v1/search?q=artist%3A${query}&type=artist`
+        let response = await fetch(url,spotify_parameters)
+        const response_data = await response.json()
+
+        artists = response_data.artists.items
+        console.log(response_data.artists.items)
+    }
+
+    let temp_func = () => {
+        console.log("hello")
     }
 
     // let dummy_image = "https://i.scdn.co/image/ab6761610000e5eb24e41f491b129093a6fee383"
@@ -59,7 +69,7 @@
 
             <div class="search flex w-5/6 border-2 rounded-xl border-white border-opacity-50 mx-auto bg-white bg-opacity-10 -mb-10 z-10">
                 <div class="w-5/6 ">
-                    <input class="w-full bg-transparent py-3 pl-6 placeholder-white text-white  font-thin outline-none" type="text" placeholder="Search for an artist ...">
+                    <input class="w-full bg-transparent py-3 pl-6 placeholder-white text-white  font-thin outline-none" type="text" bind:value={query} placeholder="Search for an artist ...">
                 </div>
                 <div class="w-1/6 flex items-center justify-end pr-4">
                     <button on:click={SEARCH_ARTIST} class="bg-white py-2 text-sm text-slate-700 transition duration-150 hover:text-black cursor-pointer px-4 flex items-center rounded-lg ">Search<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
@@ -84,14 +94,18 @@
                     </g>
                 </svg>
             </div>
-            {#if artists}
-                <div class="mt-16 w-5/6 mx-auto text-sm text-white italic">You searched for "John"</div>
+            {#if artists || true}
+                <div class="mt-16 w-5/6 mx-auto text-sm text-white italic">You searched for "{query}"</div>
             {/if}
             <div class="artists_pane w-5/6 mx-auto mt-4 ">
                 {#if artists}
                     <div class="grid grid-cols-5 gap-5 md:grid-cols-5 xl:grid-cols-7 xl:gap-6 cursor-pointer">
                         {#each artists as artist }
-                            <ArtistCard image_src={artist.images[0].url} artist_name={artist.name} />
+                            {#if artist.images < 2}
+                                <ArtistCard artist_name={artist.name} />
+                            {:else}
+                                <ArtistCard image_src={artist.images[1].url} artist_name={artist.name} artist_id={artist.id}/>
+                            {/if}
                         {/each}
                     </div>
                  {/if}
