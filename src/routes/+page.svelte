@@ -57,7 +57,6 @@
 
 
 </script>
-
 <div class="h-full w-full flex flex-col">
     <div class="w-full h-1/6">
         <div class="w-full h-1/3 px-2 bg-white">

@@ -6,8 +6,8 @@
     export let artist_id
 
 
-    let artist_page = (id) => {
-        goto(`artist/${id}`)
+    let artist_page = (artist) => {
+        goto(`/${artist}`)
     }
 </script>
 
