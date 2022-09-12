@@ -7,7 +7,7 @@
 
 
     let artist_page = (artist) => {
-        goto(`/${artist}`)
+        goto(`/artist/${artist}`)
     }
 </script>
 
