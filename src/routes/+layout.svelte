@@ -1,12 +1,14 @@
 <script>
 	import '../app.postcss';
+	import Header from '../components/header.svelte';
 
 </script>
 
 <div class="h-screen max-h-screen overflow-y-hidden w-full main ">
-	
-	<slot />
-
+	<div class="h-full w-full flex flex-col">
+		<Header />
+		<slot />
+	</div>
 </div>
 
 
