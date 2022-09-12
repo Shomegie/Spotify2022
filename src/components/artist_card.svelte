@@ -1,8 +1,8 @@
 <script>
     import { goto } from "$app/navigation";
 
-    export let image_src = "mySpotifyBGLogo.svg"
-    export let artist_name = "Default"
+    export let image_src
+    export let artist_name
     export let artist_id
 
 

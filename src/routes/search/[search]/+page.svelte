@@ -30,7 +30,9 @@
     }
     let res = await fetch(url,spotify_parameters)
     let res_data = await res.json()
-    artists = res_data.artists.items
+    let status_code = res.status
+    if (status_code == 200)
+        artists = res_data.artists.items
     }
     
 </script>
@@ -72,14 +74,14 @@
                     <div class="grid grid-cols-5 gap-5 md:grid-cols-5 xl:grid-cols-7 xl:gap-6 cursor-pointer">
                         {#each artists as artist }
                             {#if artist.images < 2}
-                                <ArtistCard artist_name={artist.name} />
+                                <ArtistCard artist_name={artist.name} image_src="/images/logo.svg" artist_id={artist.id} />
                             {:else}
                                 <ArtistCard image_src={artist.images[1].url} artist_name={artist.name} artist_id={artist.id}/>
                             {/if}
                         {/each}
                     </div>
                 {:else}
-                    <p>Todo: Error Message</p>
+                    <p>Todo: Error Messages</p>
                  {/if}
             </div>
         </div>
