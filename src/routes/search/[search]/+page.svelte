@@ -10,6 +10,11 @@
     if (data.status_code == 200)
         artists = data.res_data.artists.items
 
+    let HANDLE_ENTER = (e) =>{
+        if (e.key == "Enter")
+            SEARCH_ARTIST() 
+    }
+
     let SEARCH_ARTIST = async () =>{
         if (query === "")
             return
@@ -36,7 +41,7 @@
 
             <div class="search flex w-5/6 border-2 rounded-xl border-white border-opacity-50 mx-auto bg-white bg-opacity-10 -mb-10 z-10">
                 <div class="w-5/6 ">
-                    <input class="w-full bg-transparent py-3 pl-6 placeholder-white text-white  font-thin outline-none" type="text" bind:value={query} placeholder="Search for an artist ...">
+                    <input on:keydown={HANDLE_ENTER} class="w-full bg-transparent py-3 pl-6 placeholder-white text-white  font-thin outline-none" type="text" bind:value={query} placeholder="Search for an artist ...">
                 </div>
                 <div class="w-1/6 flex items-center justify-end pr-4">
                     <button on:click={SEARCH_ARTIST} class="bg-white py-2 text-sm text-slate-700 transition duration-150 hover:text-black cursor-pointer px-4 flex items-center rounded-lg ">Search<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
