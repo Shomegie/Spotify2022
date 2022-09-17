@@ -1,4 +1,6 @@
 <script>
+    import { goto } from "$app/navigation";
+
     export let data;
     console.log(data)
 
@@ -8,6 +10,10 @@
 
     const goSomeWhereBack = () => {
         window.history.back()
+    }
+
+    const handleClick = (id) => {
+        goto(`/track/${id}`)
     }
 </script>
 
@@ -39,7 +45,7 @@
     {#if data.status_code == 200 }
     <div class="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 w-5/6 lg:w-4/6 text-xs mx-auto">
         {#each top_tracks as track, i }
-            <div class=" border-white border-opacity-10 border rounded-xl text-white flex flex-col md:flex-col cursor-pointer hover:bg-white hover:text-black">
+            <div on:click={()=>handleClick(track.id)} class=" border-white border-opacity-10 border rounded-xl text-white flex flex-col md:flex-col cursor-pointer hover:bg-white hover:text-black">
                 {#if track.album.images.length > 0}
                 <div class="w-fit mx-auto my-1 md:my-3 "><img class="aspect-square h-16 md:h-24" src={track.album.images[0].url} alt={track.name}></div>
                 {:else}
