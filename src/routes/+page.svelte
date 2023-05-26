@@ -1,6 +1,5 @@
 <script>
     import { goto } from "$app/navigation";
-    import { s_access_token } from "../appstore";
 
     let query = "";
 
@@ -14,16 +13,9 @@
     }
 
  
-    async function getToken() {
-        const response = await fetch('/api/spotify_access_token');
-        let access_token = await response.json();
-        console.log(access_token.access_token)
-        s_access_token.set(access_token.access_token)
-    }
+
 
 </script>
-<div class="text-yellow-400 mb-4">Debug: {$s_access_token}</div>
-<div class="w-fit px-3 rounded-xl border-2 cursor-pointer" on:click={getToken}>API REQ</div>
 <div class="h-full w-full flex flex-col">
     <div class="w-full h-1/6">
         <div class="h-1/2 lg:w-5/6 mx-auto flex flex-col-reverse">
