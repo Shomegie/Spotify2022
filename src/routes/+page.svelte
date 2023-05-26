@@ -1,5 +1,6 @@
 <script>
     import { goto } from "$app/navigation";
+    import { s_access_token } from "../appstore";
 
     let query = "";
 
@@ -11,8 +12,19 @@
         if (e.key == "Enter")
             SEARCH_ARTIST() 
     }
-</script>
 
+    let product = {};
+ 
+    async function getProduct() {
+        const response = await fetch('/api/test');
+        product = await response.json();
+        console.log(product)
+        s_access_token.set(product.name)
+    }
+
+</script>
+<div class="text-yellow-400 mb-4">Debug: {$s_access_token}</div>
+<div class="w-fit px-3 rounded-xl border-2 cursor-pointer" on:click={getProduct}>API REQ</div>
 <div class="h-full w-full flex flex-col">
     <div class="w-full h-1/6">
         <div class="h-1/2 lg:w-5/6 mx-auto flex flex-col-reverse">
