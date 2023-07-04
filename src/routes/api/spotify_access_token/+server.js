@@ -5,7 +5,7 @@ export async function GET(){
   const client_id = env.SPOTIFY_CLIENT_ID
   const client_secret = env.SPOTIFY_CLIENT_SECRET
   const refresh_token = env.REFRESH_TOKEN
-  const redirect_uri = "http://localhost:5175"
+  const redirect_uri = "https://spotify2022.vercel.app"
   const token_endpoint = `https://accounts.spotify.com/api/token`
 
   const res = await fetch(token_endpoint, {
